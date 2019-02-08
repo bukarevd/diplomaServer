@@ -1,19 +1,22 @@
 package components;
 
-import java.io.*;
-import java.util.Arrays;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.HashMap;
 
 public class FileObject extends CommandsObject implements Externalizable {
     private static final long serialVersionUID = 1L;
     private static final int VERSION = 1;
-    String name;
-    String path;
-    String content;
-    String owner;
-    String group;
-    String dependence;
+    String name = "";
+    String path = "";
+    String content = "";
+    String owner = "";
+    String group = "";
+    String dependency = "";
     int chmod;
+    CommandsObject objectDependecy;
 
     public FileObject(String commandString) {
         parsingCommand(commandString);
@@ -62,22 +65,29 @@ public class FileObject extends CommandsObject implements Externalizable {
         this.group = group;
     }
 
-    public String getDependence() {
-        return dependence;
+    public String getDependency() {
+        return dependency;
     }
 
-    public void setDependence(String dependence) {
-        this.dependence = dependence;
+    public void setDependency(String dependency) {
+        this.dependency = dependency;
     }
 
     public int getChmod() {
         return chmod;
     }
 
-    public void setChmod(int chown) {
-        this.chmod = chown;
+    public void setChmod(int chmod) {
+        this.chmod = chmod;
     }
 
+    public CommandsObject getObjectDependecy() {
+        return objectDependecy;
+    }
+
+    public void setObjectDependecy(CommandsObject objectDependecy) {
+        this.objectDependecy = objectDependecy;
+    }
 
     public void parsingCommand(String commandString) {
         HashMap<String, String> commandHashMap = new HashMap<>();
@@ -97,8 +107,7 @@ public class FileObject extends CommandsObject implements Externalizable {
         setContent(ValuesHashMap.get("content"));
         setOwner(ValuesHashMap.get("owner"));
         setGroup(ValuesHashMap.get("group"));
-        setDependence(ValuesHashMap.get("dependence"));
-        setChmod(Integer.parseInt(ValuesHashMap.get("chown")));
+        setChmod(Integer.parseInt(ValuesHashMap.get("chmod")));
     }
 
     @Override
@@ -109,14 +118,15 @@ public class FileObject extends CommandsObject implements Externalizable {
         out.writeUTF(getContent());
         out.writeUTF(getOwner());
         out.writeUTF(getGroup());
-        out.writeUTF(getDependence());
+        out.writeUTF(getDependency());
         out.writeInt(getChmod());
+        out.writeObject(getObjectDependecy());
     }
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         int version = in.readInt();
-        if (version > VERSION){
+        if (version > VERSION) {
             throw new IOException("Unsupport version FileObject");
         }
         setName(in.readUTF());
@@ -124,7 +134,8 @@ public class FileObject extends CommandsObject implements Externalizable {
         setContent(in.readUTF());
         setOwner(in.readUTF());
         setGroup(in.readUTF());
-        setDependence(in.readUTF());
+        setDependency(in.readUTF());
         setChmod(in.readInt());
+        setObjectDependecy((CommandsObject) in.readObject());
     }
 }

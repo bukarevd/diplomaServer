@@ -24,17 +24,10 @@ public class ParserConfigFiles {
         fileConfig = server.getSERVERCONFIG();
         String configServerString = reader(fileConfig);
         setValue(server, configServerString);
-
     }
 
-//    private void readClientFile(Client client) {
-//        fileConfig = new File(client.getCLIENTCONFIG());
-//        String configClientString = reader(fileConfig);
-//        setValue(client, configClientString);
-//
-//    }
-
     private String reader(File file) {
+        System.out.println("Read server config file");
         String str = null;
         try (InputStream in = new FileInputStream(file);
              ByteArrayOutputStream bout = new ByteArrayOutputStream()) {
@@ -51,6 +44,7 @@ public class ParserConfigFiles {
     }
 
     private void setValue(Server server, String string) {
+        System.out.println("Parsing server config file");
         HashMap<String, String> configValues = new HashMap<>();
         String[] configArray = string.split("\n");
         for (String str : configArray) {

@@ -1,14 +1,16 @@
 package components;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class CommandObject extends CommandsObject implements Externalizable {
     private static final long serialVersionUID = 1L;
     private static final int VERSION = 1;
-    String name;
-    String exec;
+    private String name = "";
+    private String exec = "";
+    private String dependency = "";
+    CommandsObject objectDependecy;
+
 
     public CommandObject(String commandString) {
         parsingCommand(commandString);
@@ -22,18 +24,34 @@ public class CommandObject extends CommandsObject implements Externalizable {
         this.name = name;
     }
 
-    public String getExec() {
+    private String getExec() {
         return exec;
     }
 
-    public void setExec(String exec) {
+    private void setExec(String exec) {
         this.exec = exec;
     }
 
-    public void parsingCommand(String commandString) {
+    public String getDependency() {
+        return dependency;
+    }
+
+    private void setDependency(String dependency) {
+        this.dependency = dependency;
+    }
+
+    public CommandsObject getObjectDependecy() {
+        return objectDependecy;
+    }
+
+    public void setObjectDependecy(CommandsObject objectDependecy) {
+        this.objectDependecy = objectDependecy;
+    }
+
+
+    private void parsingCommand(String commandString) {
         HashMap<String, String> commandHashMap = new HashMap<>();
         String[] tempString = commandString.split(";\n");
-        System.out.println(Arrays.toString(tempString));
         for (String str : tempString) {
             String[] keyValue = str.split("=>");
             commandHashMap.put(keyValue[0], keyValue[1]);
@@ -42,7 +60,7 @@ public class CommandObject extends CommandsObject implements Externalizable {
     }
 
 
-    public void setValue(HashMap<String, String> ValuesHashMap) {
+    private void setValue(HashMap<String, String> ValuesHashMap) {
         setName(ValuesHashMap.get("name"));
         setExec(ValuesHashMap.get("exec"));
     }
@@ -50,8 +68,10 @@ public class CommandObject extends CommandsObject implements Externalizable {
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeInt(VERSION);
-        out.writeUTF(name);
-        out.writeUTF(exec);
+        out.writeUTF(getName());
+        out.writeUTF(getExec());
+        out.writeUTF(getDependency());
+        out.writeObject(getObjectDependecy());
 
     }
 
@@ -63,5 +83,9 @@ public class CommandObject extends CommandsObject implements Externalizable {
         }
         setName(in.readUTF());
         setExec(in.readUTF());
+        setDependency(in.readUTF());
+        setObjectDependecy((CommandsObject)in.readObject());
     }
+
+
 }

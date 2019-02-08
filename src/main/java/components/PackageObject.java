@@ -6,9 +6,11 @@ import java.util.HashMap;
 public class PackageObject extends CommandsObject implements Externalizable {
     private static final long serialVersionUID = 1L;
     private static final int VERSION = 1;
-    String name;
-    String version;
-    String dependence;
+    private String name = "";
+    private String version = "";
+    private String dependency = "";
+    CommandsObject objectDependecy;
+
 
     public void setName(String name) {
         this.name = name;
@@ -18,27 +20,36 @@ public class PackageObject extends CommandsObject implements Externalizable {
         return name;
     }
 
-    public String getVersion() {
+    private String getVersion() {
         return version;
     }
 
-    public String getDependence() {
-        return dependence;
+    public String getDependency() {
+        return dependency;
     }
 
-    public void setVersion(String version) {
+    private void setVersion(String version) {
         this.version = version;
     }
 
-    public void setDependence(String dependence) {
-        this.dependence = dependence;
+    private void setDependency(String dependence) {
+        this.dependency = dependence;
+    }
+    public CommandsObject getObjectDependecy() {
+        return objectDependecy;
+    }
+
+    public void setObjectDependecy(CommandsObject objectDependecy) {
+        this.objectDependecy = objectDependecy;
     }
 
     public PackageObject(String commandString) {
         parsingCommand(commandString);
     }
 
-    public void parsingCommand(String commandString) {
+
+
+    private void parsingCommand(String commandString) {
         HashMap<String, String> commandHashMap = new HashMap<>();
         String[] tempString = commandString.split(";\n");
         for (String str : tempString) {
@@ -49,10 +60,10 @@ public class PackageObject extends CommandsObject implements Externalizable {
     }
 
 
-    public void setValue(HashMap<String, String> ValuesHashMap) {
+    private void setValue(HashMap<String, String> ValuesHashMap) {
         setName(ValuesHashMap.get("name"));
         setVersion(ValuesHashMap.get("version"));
-        setDependence(ValuesHashMap.get("dependence"));
+        setDependency(ValuesHashMap.get("dependence"));
     }
 
     @Override
@@ -60,7 +71,8 @@ public class PackageObject extends CommandsObject implements Externalizable {
         out.writeInt(VERSION);
         out.writeUTF(getName());
         out.writeUTF(getVersion());
-        out.writeUTF(getDependence());
+        out.writeUTF(getDependency());
+        out.writeObject(getObjectDependecy());
     }
 
     @Override
@@ -71,6 +83,7 @@ public class PackageObject extends CommandsObject implements Externalizable {
         }
         setName(in.readUTF());
         setVersion(in.readUTF());
-        setDependence(in.readUTF());
+        setDependency(in.readUTF());
+        setObjectDependecy((CommandsObject) in.readObject());
     }
 }

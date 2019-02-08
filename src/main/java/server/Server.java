@@ -1,8 +1,6 @@
 package server;
 
-import components.CommandsObject;
-import components.DiplomaApp;
-import components.ParserConfigFiles;
+import components.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,9 +46,7 @@ public class Server extends DiplomaApp {
 
     void start(List<CommandsObject> quiuiList) {
         try (ServerSocket server = new ServerSocket(serverPort)) {
-            System.out.println(quiuiList);
             Socket socket = server.accept();
-            System.out.println(quiuiList);
             sendMessage(socket, quiuiList);
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,16 +54,21 @@ public class Server extends DiplomaApp {
 
     }
 
+
+
+
+
     //    Отправка объектов на клиент для выполнения
     void sendMessage(Socket socket, List<CommandsObject> quiuiList) {
+        System.out.println("Send objects:");
         try {
             while (!socket.isClosed()) {
                 ObjectOutputStream outServer = new ObjectOutputStream(socket.getOutputStream());
-              // for (CommandsObject command : quiuiList) {
-                    System.out.println(quiuiList.get(2));
-                    outServer.writeObject(quiuiList.get(2));
+                for (CommandsObject commandsObject: quiuiList) {
+                    System.out.println(commandsObject);
+                    outServer.writeObject(commandsObject);
                     outServer.flush();
-              //  }
+                }
                 outServer.close();
                 socket.close();
             }
