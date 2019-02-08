@@ -9,7 +9,7 @@ public class PackageObject extends CommandsObject implements Externalizable {
     private String name = "";
     private String version = "";
     private String dependency = "";
-    CommandsObject objectDependecy;
+    private CommandsObject objectDependecy;
 
 
     public void setName(String name) {
@@ -32,7 +32,7 @@ public class PackageObject extends CommandsObject implements Externalizable {
         this.version = version;
     }
 
-    private void setDependency(String dependence) {
+    public void setDependency(String dependence) {
         this.dependency = dependence;
     }
     public CommandsObject getObjectDependecy() {

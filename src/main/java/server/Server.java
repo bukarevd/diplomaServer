@@ -18,7 +18,7 @@ public class Server extends DiplomaApp {
     private Server() {
     }
 
-    public static Server getInstance() {
+    private static Server getInstance() {
         if (instances == null) instances = new Server();
         return instances;
     }
@@ -44,28 +44,22 @@ public class Server extends DiplomaApp {
     }
 
 
-    void start(List<CommandsObject> quiuiList) {
+    private void start(List<CommandsObject> quiuiList) {
         try (ServerSocket server = new ServerSocket(serverPort)) {
             Socket socket = server.accept();
             sendMessage(socket, quiuiList);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
-
-
-
     //    Отправка объектов на клиент для выполнения
-    void sendMessage(Socket socket, List<CommandsObject> quiuiList) {
+    private void sendMessage(Socket socket, List<CommandsObject> quiuiList) {
         System.out.println("Send objects:");
         try {
             while (!socket.isClosed()) {
                 ObjectOutputStream outServer = new ObjectOutputStream(socket.getOutputStream());
                 for (CommandsObject commandsObject: quiuiList) {
-                    System.out.println(commandsObject);
+                    System.out.println(commandsObject.getName());
                     outServer.writeObject(commandsObject);
                     outServer.flush();
                 }

@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class ParserConfigFiles {
     private DiplomaApp app;
-    private File fileConfig;
 
     public ParserConfigFiles(DiplomaApp app) {
         this.app = app;
@@ -21,7 +20,7 @@ public class ParserConfigFiles {
     }
 
     private void readServerFile(Server server) {
-        fileConfig = server.getSERVERCONFIG();
+        File fileConfig = server.getSERVERCONFIG();
         String configServerString = reader(fileConfig);
         setValue(server, configServerString);
     }

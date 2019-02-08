@@ -9,7 +9,7 @@ public class CommandObject extends CommandsObject implements Externalizable {
     private String name = "";
     private String exec = "";
     private String dependency = "";
-    CommandsObject objectDependecy;
+    private CommandsObject objectDependecy;
 
 
     public CommandObject(String commandString) {
@@ -36,7 +36,7 @@ public class CommandObject extends CommandsObject implements Externalizable {
         return dependency;
     }
 
-    private void setDependency(String dependency) {
+    public void setDependency(String dependency) {
         this.dependency = dependency;
     }
 

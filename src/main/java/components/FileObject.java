@@ -9,14 +9,14 @@ import java.util.HashMap;
 public class FileObject extends CommandsObject implements Externalizable {
     private static final long serialVersionUID = 1L;
     private static final int VERSION = 1;
-    String name = "";
-    String path = "";
-    String content = "";
-    String owner = "";
-    String group = "";
-    String dependency = "";
-    int chmod;
-    CommandsObject objectDependecy;
+    private String name = "";
+    private String path = "";
+    private String content = "";
+    private String owner = "";
+    private String group = "";
+    private String dependency = "";
+    private int chmod;
+    private CommandsObject objectDependecy;
 
     public FileObject(String commandString) {
         parsingCommand(commandString);
@@ -33,35 +33,35 @@ public class FileObject extends CommandsObject implements Externalizable {
         this.name = name;
     }
 
-    public String getPath() {
+    private String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    private void setPath(String path) {
         this.path = path;
     }
 
-    public String getContent() {
+    private String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    private void setContent(String content) {
         this.content = content;
     }
 
-    public String getOwner() {
+    private String getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    private void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public String getGroup() {
+    private String getGroup() {
         return group;
     }
 
-    public void setGroup(String group) {
+    private void setGroup(String group) {
         this.group = group;
     }
 
@@ -73,11 +73,11 @@ public class FileObject extends CommandsObject implements Externalizable {
         this.dependency = dependency;
     }
 
-    public int getChmod() {
+    private int getChmod() {
         return chmod;
     }
 
-    public void setChmod(int chmod) {
+    private void setChmod(int chmod) {
         this.chmod = chmod;
     }
 
@@ -89,7 +89,7 @@ public class FileObject extends CommandsObject implements Externalizable {
         this.objectDependecy = objectDependecy;
     }
 
-    public void parsingCommand(String commandString) {
+    private void parsingCommand(String commandString) {
         HashMap<String, String> commandHashMap = new HashMap<>();
         String[] tempString = commandString.split(";\n");
         for (String str : tempString) {
@@ -101,7 +101,7 @@ public class FileObject extends CommandsObject implements Externalizable {
     }
 
 
-    public void setValue(HashMap<String, String> ValuesHashMap) {
+    private void setValue(HashMap<String, String> ValuesHashMap) {
         setName(ValuesHashMap.get("name"));
         setPath(ValuesHashMap.get("path"));
         setContent(ValuesHashMap.get("content"));
