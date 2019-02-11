@@ -7,16 +7,18 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 
 public class ParserConfigFiles {
-    private DiplomaApp app;
+    private Server server;
 
-    public ParserConfigFiles(DiplomaApp app) {
-        this.app = app;
+    public Server getServer() {
+        return server;
+    }
+
+    public ParserConfigFiles(Server server) {
+        this.server = server;
     }
 
     public void getConfig() {
-        if (app instanceof Server) {
-            readServerFile((Server) app);
-        }
+        readServerFile(getServer());
     }
 
     private void readServerFile(Server server) {

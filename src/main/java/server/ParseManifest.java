@@ -32,7 +32,7 @@ class ParseManifest {
     }
 
     private void createCommand(String file) {
-        System.out.println("Add objects of manifest in list ");
+        System.out.println("Добавление объектов в List");
         String[] command = file.split("}\n");
         for (String everyCommand : command) {
             String[] parseCommand = everyCommand.split("\\{\n");

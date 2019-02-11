@@ -1,7 +1,6 @@
 package server;
 
 import components.CommandsObject;
-import components.DiplomaApp;
 import components.ParserConfigFiles;
 
 import java.io.File;
@@ -9,11 +8,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 
-public class Server extends DiplomaApp {
+public class Server {
     private File SERVERCONFIG = new File("/Users/bukarevd/Documents/server.conf");
     private int serverPort;
     private static Server instances;
-
 
     private Server() {
     }
