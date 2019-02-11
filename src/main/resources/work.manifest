@@ -1,0 +1,23 @@
+package{
+name=>mc;
+action=>install;
+dependence=>update;
+}
+command{
+name=>update;
+exec=>sudo -S apt-get update;
+}
+file{
+name=>diplomtestfile;
+path=>~/;
+content=>"test string1
+Test string2 
+Test string 3";
+owner=>root;
+group=>root;
+chmod=>644;
+}
+
+
+
+
