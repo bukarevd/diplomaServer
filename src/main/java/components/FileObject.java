@@ -102,9 +102,24 @@ public class FileObject extends CommandsObject implements Externalizable {
 
 
     private void setValue(HashMap<String, String> ValuesHashMap) {
-        setName(ValuesHashMap.get("name"));
-        setPath(ValuesHashMap.get("path"));
-        setContent(ValuesHashMap.get("content"));
+        if (ValuesHashMap.containsKey("name"))
+            setName(ValuesHashMap.get("name"));
+        else {
+            System.out.println("Не заполненно поле name у объекта File");
+            System.exit(0);
+        }
+        if (ValuesHashMap.containsKey("path"))
+            setPath(ValuesHashMap.get("path"));
+        else {
+            System.out.println("Не заполненно поле path у объекта File");
+            System.exit(0);
+        }
+        if (ValuesHashMap.containsKey("content"))
+            setContent(ValuesHashMap.get("content"));
+        else {
+            System.out.println("Не заполненно поле content у объекта File");
+            System.exit(0);
+        }
         setOwner(ValuesHashMap.get("owner"));
         setGroup(ValuesHashMap.get("group"));
         setChmod(Integer.parseInt(ValuesHashMap.get("chmod")));

@@ -1,6 +1,9 @@
 package components;
 
-import java.io.*;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.HashMap;
 
 public class CommandObject extends CommandsObject implements Externalizable {
@@ -61,8 +64,18 @@ public class CommandObject extends CommandsObject implements Externalizable {
 
 
     private void setValue(HashMap<String, String> ValuesHashMap) {
-        setName(ValuesHashMap.get("name"));
-        setExec(ValuesHashMap.get("exec"));
+        if (ValuesHashMap.containsKey("name"))
+            setName(ValuesHashMap.get("name"));
+        else {
+            System.out.println("Не заполненно поле name у объекта Command");
+            System.exit(1);
+        }
+        if (ValuesHashMap.containsKey("exec"))
+            setExec(ValuesHashMap.get("exec"));
+        else {
+            System.out.println("Не заполненно поле exec у объекта Command");
+            System.exit(1);
+        }
     }
 
     @Override
@@ -78,13 +91,13 @@ public class CommandObject extends CommandsObject implements Externalizable {
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         int version = in.readInt();
-        if (version > VERSION){
+        if (version > VERSION) {
             throw new IOException("Unsupport version CommandObject");
         }
         setName(in.readUTF());
         setExec(in.readUTF());
         setDependency(in.readUTF());
-        setObjectDependecy((CommandsObject)in.readObject());
+        setObjectDependecy((CommandsObject) in.readObject());
     }
 
 

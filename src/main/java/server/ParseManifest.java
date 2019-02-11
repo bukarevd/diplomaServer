@@ -52,7 +52,6 @@ class ParseManifest {
             if (object.getDependency().isEmpty()) {
                 continue;
             } else {
-
                 object.setObjectDependecy(getObjectDependency(object.getDependency()));
             }
         }
